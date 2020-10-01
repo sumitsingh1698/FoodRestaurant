@@ -1,0 +1,61 @@
+name: BellyRestaurant
+description: Belly Restaurant Application
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.2
+  cached_network_image: ^2.0.0-rc
+  shared_preferences: ^0.5.3+4
+  flutter_screenutil: ^0.6.0
+  localstorage: ^3.0.1+4
+  intl: ^0.16.0
+  pin_code_text_field: ^1.5.1
+  extended_tabs: ^0.2.2
+  image_picker: 0.6.4
+  flutter_pagewise: ^1.2.3
+  connectivity: ^0.4.3+4
+  geocoder: ^0.2.1
+  location: ^2.3.5
+  provider: ^4.0.4
+  google_maps_flutter: ^0.5.21+17
+  flutter_local_notifications: ^1.1.1
+  audioplayers: ^0.15.1
+  flutter_ringtone_player:
+  firebase_messaging:
+      # git:
+      #   url: https://github.com/MaikuB/flutterfire.git
+      #   path: packages/firebase_messaging
+
+dev_dependencies:
+  flutter_launcher_icons: "^0.7.3"
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"   
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - images/icons/camera_icon.png
+    - assets/splashscreen.png
+    # - images/icons/camera.png
+    # - images/icons/bag.png
+    - assets/audios/presto.mp3
+
+  fonts:
+    - family: NotoSansJP
+      fonts:
+        - asset: fonts/NotoSansJP-Regular.otf
+        - asset: fonts/NotoSansJP-Bold.otf
+
