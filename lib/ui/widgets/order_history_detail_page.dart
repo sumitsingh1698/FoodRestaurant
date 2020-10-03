@@ -117,16 +117,19 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                             padding: EdgeInsets.symmetric(
                                 vertical: _screenConfig.rH(1)),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
+                                  // "",
                                   widget._selectedOrder.orderitems[index].count
-                                      .toString(),
-                                  style: CustomFontStyle.regularBoldTextStyle(
+                                          .toString() +
+                                      " x ",
+                                  style: CustomFontStyle.mediumTextStyle(
                                       blackColor),
                                 ),
                                 SizedBox(width: _screenConfig.rW(2)),
                                 SizedBox(
-                                    width: _screenConfig.rW(20),
+                                    width: _screenConfig.rW(22),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -135,18 +138,23 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         Text(
+                                          // "",
                                           widget._selectedOrder
                                               .orderitems[index].itemName,
-                                          style: CustomFontStyle
-                                              .regularBoldTextStyle(blackColor),
+
+                                          textAlign: TextAlign.center,
+                                          style:
+                                              CustomFontStyle.mediumTextStyle(
+                                                  blackColor),
                                         ),
                                         widget._selectedOrder.orderitems[index]
                                                     .size ==
                                                 null
                                             ? Container()
                                             : Text(
-                                                widget._selectedOrder
-                                                    .orderitems[index].size,
+                                                "Size : " +
+                                                    widget._selectedOrder
+                                                        .orderitems[index].size,
                                                 style: CustomFontStyle
                                                     .smallTextStyle(greyColor),
                                               ),
@@ -156,7 +164,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: Text(
-                                      "₹ " +
+                                      "₹" +
                                           widget._selectedOrder
                                               .orderitems[index].itemPrice
                                               .toString(),

@@ -269,7 +269,9 @@ class _HomeScreenState extends State<HomeScreen>
                                         size: _screenConfig.rH(5),
                                       ),
                                       "History",
-                                      "0")
+                                      _counts.orderHistoryCount != null
+                                          ? _counts.orderHistoryCount.toString()
+                                          : "0")
                                 ]);
                           }),
                         ),

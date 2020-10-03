@@ -11,16 +11,20 @@ class CountModel extends ChangeNotifier {
   /// Internal, private state of the cart.
   int newOrderCount;
   int pickUpOrderCount;
+  int orderHistoryCount;
 
   void getCountData(token) async {
     HomePageDataSource _dataSource = new HomePageDataSource();
     var data = await _dataSource.getTabCountsData(token);
     if (data['status']) {
+      print(data);
       newOrderCount = data['tabview']['neworder'];
       pickUpOrderCount = data['tabview']['pickup'];
+      orderHistoryCount = data['tabview']['orderhistory'];
     } else {
       newOrderCount = 0;
       pickUpOrderCount = 0;
+      orderHistoryCount = 0;
     }
     print('get count data');
     notifyListeners();
@@ -44,6 +48,7 @@ class CountModel extends ChangeNotifier {
   int get getNewOrderCount => newOrderCount;
 
   int get getPickUpOrderCount => pickUpOrderCount;
+  int get getOrderHistoryCount => orderHistoryCount;
 
   void updateNewOrderCount(int c) {
     newOrderCount = c;
@@ -53,6 +58,12 @@ class CountModel extends ChangeNotifier {
 
   void updatePickupOrderCount(int p) {
     pickUpOrderCount = p;
+    // This call tells the widgets that are listening to this model to rebuild.
+    notifyListeners();
+  }
+
+  void updateOrderHistoryCount(int p) {
+    orderHistoryCount = p;
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }

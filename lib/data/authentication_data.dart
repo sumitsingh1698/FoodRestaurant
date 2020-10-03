@@ -62,6 +62,7 @@ class AuthDataSource {
 
     return _netUtil.sendOtp(sendSignUpOtpUrl, body).then((dynamic res) async {
       if (res['status']) {
+        print(res);
         return [true];
       } else {
         return [false, res['message']];

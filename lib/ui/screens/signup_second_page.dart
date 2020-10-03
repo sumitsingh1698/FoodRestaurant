@@ -49,10 +49,13 @@ class _SignUpStoreSetupState extends State<SignUpStoreSetupPage> {
     setState(() {
       _isButtonDisabled = true;
     });
+    // print("IN handle store Sign OTP");
     widget.userData.storeNumber = _storeNumberController.text;
     widget.userData.foodType = selectedFoodType.name;
     var _response = await authData.sendSignUpOtpCode(
         widget.userData.phone, widget.userData.emailAddress);
+    // print("In 2");
+    print(_response);
     if (_response[0]) {
       _loader = false;
       Navigator.push(
@@ -252,6 +255,8 @@ class _SignUpStoreSetupState extends State<SignUpStoreSetupPage> {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: InkWell(
             onTap: () {
+              print(_isButtonDisabled);
+              print(_isButtonDisabled);
               if (_formKey.currentState.validate()) {
                 _isButtonDisabled ? null : _handleStoreSignUpOtp();
               }
