@@ -1,3 +1,5 @@
+import 'package:BellyRestaurant/models/pricing_model.dart';
+
 class EditItemResponseModel {
   Fooditems fooditems;
   bool status;
@@ -52,8 +54,7 @@ class Fooditems {
 
 class Item {
   String type;
-  String size;
-  double price;
+  List<Pricing> pricing;
   String image;
   int id;
   String shortDescription;
@@ -61,28 +62,34 @@ class Item {
 
   Item(
       {this.type,
-        this.size,
-        this.price,
-        this.image,
-        this.id,
-        this.shortDescription,
-        this.name});
+      this.pricing,
+      this.image,
+      this.id,
+      this.shortDescription,
+      this.name});
 
   Item.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    size = json['size'];
-    price = json['price'];
+
     image = json['image'];
     id = json['id'];
     shortDescription = json['short_description'];
     name = json['name'];
+    // print("pricing ${json['pricing'].toString()}");
+    if (json['pricing'] != null) {
+      pricing = new List<Pricing>();
+      json['pricing'].forEach((v) {
+        pricing.add(new Pricing.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
-    data['size'] = this.size;
-    data['price'] = this.price;
+    if (this.pricing != null) {
+      data['pricing'] = this.pricing.map((v) => v.toJson()).toList();
+    }
     data['image'] = this.image;
     data['id'] = this.id;
     data['short_description'] = this.shortDescription;

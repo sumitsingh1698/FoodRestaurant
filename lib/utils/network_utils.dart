@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class NetworkUtil {
@@ -84,6 +85,7 @@ class NetworkUtil {
     };
     var response = await http.get(url, headers: requestHeaders);
     final int statusCode = response.statusCode;
+    print("getResturantItems ${response.body}");
     if (statusCode < 200 || statusCode > 400 || json == null) {
       final Map parsed = json.decode(utf8.decode(response.bodyBytes));
       print(parsed);
@@ -153,6 +155,8 @@ class NetworkUtil {
     };
     var response = await http.get(url, headers: requestHeaders);
     final int statusCode = response.statusCode;
+    log("${response.body}");
+    // print("${response.body}");
     if (statusCode < 200 || statusCode > 400 || json == null) {
       final Map parsed = json.decode(utf8.decode(response.bodyBytes));
       print('pickup error $parsed');
@@ -243,6 +247,38 @@ class NetworkUtil {
       'Authorization': "Token " + token
     };
     var response = await http.put(url, headers: requestHeaders, body: _body);
+    final int statusCode = response.statusCode;
+    if (statusCode < 200 || statusCode > 400 || json == null) {
+      throw new Exception("Error while fetching data");
+    }
+    final Map parsed = json.decode(utf8.decode(response.bodyBytes));
+    return parsed;
+  }
+
+  Future<dynamic> deleteData(String url, token) async {
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Authorization': "Token " + token
+    };
+    var response = await http.delete(url, headers: requestHeaders);
+    final int statusCode = response.statusCode;
+    if (statusCode < 200 || statusCode > 400 || json == null) {
+      throw new Exception("Error while fetching data");
+    }
+    final Map parsed = json.decode(utf8.decode(response.bodyBytes));
+    return parsed;
+  }
+
+  Future<dynamic> postData(String url, token, data) async {
+    var _body = json.encode(data);
+    print('post Data');
+    print(_body);
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Authorization': "Token " + token
+    };
+
+    var response = await http.post(url, headers: requestHeaders, body: _body);
     final int statusCode = response.statusCode;
     if (statusCode < 200 || statusCode > 400 || json == null) {
       throw new Exception("Error while fetching data");

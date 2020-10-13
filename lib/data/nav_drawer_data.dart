@@ -15,6 +15,7 @@ class NavDrawerDataSource {
     return _netUtil
         .getRestaurantItems(allItemsStatusUrl, token)
         .then((dynamic res) async {
+      print("itemStatusDetail $res");
       ListItemResponseModel response = ListItemResponseModel.fromJson(res);
       return response;
     });

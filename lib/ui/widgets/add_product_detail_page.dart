@@ -29,8 +29,6 @@ class AddProductDetailPage extends StatefulWidget {
 
 class _AddProductDetailPage extends State<AddProductDetailPage> {
   TextEditingController _foodNameController;
-  TextEditingController _sizeNameController;
-  TextEditingController _priceController;
   TextEditingController _descriptionController;
 
   bool _loader = true;
@@ -58,8 +56,6 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
     _radioValue = "Single";
     choice = _radioValue;
     _foodNameController = new TextEditingController();
-    _sizeNameController = new TextEditingController();
-    _priceController = new TextEditingController();
     _descriptionController = new TextEditingController();
   }
 
@@ -80,8 +76,6 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
       "image": _image.toString(),
       "name": _foodNameController.text,
       "short_description": _descriptionController.text,
-      "size": _sizeNameController.text,
-      "price": _priceController.text,
       "type": choice,
       "food_category": selectedFoodCat.id,
       "diet": diet,
@@ -112,8 +106,7 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
     request.headers['Authorization'] = "Token " + token;
     request.fields['name'] = body['name'];
     request.fields['short_description'] = body['short_description'];
-    request.fields['size'] = body['size'];
-    request.fields['price'] = body['price'];
+
     request.fields['type'] = body['type'];
     request.fields['food_category'] = body['food_category'].toString();
     request.fields['diet'] = body['diet'];
@@ -293,23 +286,6 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
                         height: 1,
                         color: Colors.grey,
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(sizeOrQuantity,
-                            style:
-                                CustomFontStyle.regularTextStyle(blackColor)),
-                      ),
-                      Container(
-                        child: TextFormField(
-                          validator: validateString,
-                          controller: _sizeNameController,
-                          decoration: new InputDecoration.collapsed(
-                              hintText: 'Enter here'),
-                          style:
-                              CustomFontStyle.regularFormTextStyle(greyColor),
-                          keyboardType: TextInputType.text,
-                        ),
-                      ),
                       Container(
                         height: 1,
                         color: Colors.grey,
@@ -321,32 +297,6 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
                             bottom: BorderSide(
                               color: cloudsColor,
                             ),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _screenConfig.rH(2)),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(price,
-                                  style: CustomFontStyle.regularTextStyle(
-                                      blackColor)),
-                              SizedBox(
-                                width: _screenConfig.rW(1),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  child: TextFormField(
-                                    validator: validateString,
-                                    controller: _priceController,
-                                    decoration: new InputDecoration.collapsed(),
-                                    style: CustomFontStyle.regularFormTextStyle(
-                                        greyColor),
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                         ),
                       ),

@@ -1,5 +1,7 @@
 import 'package:BellyRestaurant/data/location_list_data.dart';
 import 'package:BellyRestaurant/models/food_type_model.dart';
+import 'package:BellyRestaurant/models/pricing_model.dart';
+import 'package:BellyRestaurant/ui/widgets/pricing_add_edit_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:BellyRestaurant/constants/String.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:BellyRestaurant/constants/Style.dart';
 import 'dart:async';
 import 'package:BellyRestaurant/constants/Color.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:BellyRestaurant/data/product_update_data.dart';
 import 'package:BellyRestaurant/models/edit_item_response_model.dart';
@@ -41,6 +44,7 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   TextEditingController _sizeNameController;
   TextEditingController _priceController;
   TextEditingController _descriptionController;
+  List<Pricing> pricingList;
 
   bool _loader = false;
   bool _validate = false;
@@ -56,6 +60,9 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   FoodItemCategory selectedFoodCat;
   String diet = "Non-veg";
   List<String> dietList = ["Veg", "Non-veg"];
+
+  List<Pricing> pricing = [];
+
   @override
   void initState() {
     super.initState();
@@ -161,6 +168,8 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   }
 
   void getData() async {
+    print("get Data fo Edit Product");
+
     setState(() {
       isLoading = true;
     });
@@ -179,20 +188,44 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
       _foodNameController = new TextEditingController(
         text: data.fooditems.list[selectedItem].name,
       );
-      _sizeNameController = new TextEditingController(
-          text: data.fooditems.list[selectedItem].size);
-      _priceController = new TextEditingController(
-          text: data.fooditems.list[selectedItem].price.toString());
+      // _sizeNameController = new TextEditingController(
+      //     text: data.fooditems.list[selectedItem].size);
+      // _priceController = new TextEditingController(
+      //     text: data.fooditems.list[selectedItem].price.toString());
       _descriptionController = new TextEditingController(
           text: data.fooditems.list[selectedItem].shortDescription);
       _radioValue = data.fooditems.list[selectedItem].type;
       choice = _radioValue;
+      pricingList = data.fooditems.list[selectedItem].pricing;
     } else {
       _foodNameController = new TextEditingController();
-      _sizeNameController = new TextEditingController();
-      _priceController = new TextEditingController();
+      pricingList = [];
       _descriptionController = new TextEditingController();
     }
+  }
+
+  void _deletePricing(int pricingId) async {
+    await _editItemsDataSource.deletePricing(token, pricingId).then((value) {
+      if (value) {
+        getData();
+        Fluttertoast.showToast(
+            msg: "Successfully Deleted",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else
+        Fluttertoast.showToast(
+            msg: "Failed",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+    });
   }
 
   @override
@@ -221,7 +254,8 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   Widget _buildProductsList(context) {
     int setCount = data.fooditems.set;
     int singleCount = data.fooditems.single;
-    int total = setCount + singleCount;
+    // int total = setCount + singleCount;
+    int total = 0 + singleCount;
     return Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -317,7 +351,9 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
                                 width: _screenConfig.rH(20),
                                 child: _image == null
                                     ? CachedNetworkImage(
-                                        imageUrl: item.image,
+                                        imageUrl: item.image == null
+                                            ? ""
+                                            : item.image,
                                         errorWidget: (context, url, error) =>
                                             new Icon(Icons.error),
                                         fit: BoxFit.cover,
@@ -383,27 +419,55 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(sizeOrQuantity,
-                          style: CustomFontStyle.regularTextStyle(blackColor)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.0),
                       child: Container(
-                        child: TextFormField(
-                          //initialValue: widget._selectedOrder.size,
-                          validator: validateString,
-                          controller: _sizeNameController,
-                          decoration: new InputDecoration.collapsed(),
-                          style:
-                              CustomFontStyle.regularFormTextStyle(greyColor),
-                          keyboardType: TextInputType.text,
-                        ),
-                      ),
+                          child: pricingList == null
+                              ? Container()
+                              : Column(
+                                  children: _buildPricingList(
+                                    pricingList,
+                                    buildContext,
+                                  ),
+                                )),
                     ),
+
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 16.0),
+                    //   child: Container(
+                    //     child: TextFormField(
+                    //       //initialValue: widget._selectedOrder.size,
+                    //       validator: validateString,
+                    //       controller: _sizeNameController,
+                    //       decoration: new InputDecoration.collapsed(),
+                    //       style:
+                    //           CustomFontStyle.regularFormTextStyle(greyColor),
+                    //       keyboardType: TextInputType.text,
+                    //     ),
+                    //   ),
+                    // ),
                     Container(
                       height: 1,
                       color: Colors.grey,
                     ),
+                    Container(
+                      child: RaisedButton(
+                        onPressed: () {
+                          showDialog(
+                                  context: buildContext,
+                                  child: PricingAddEditDialog(
+                                      itemId:
+                                          data.fooditems.list[selectedItem].id))
+                              .then((value) {
+                            getData();
+                          });
+                        },
+                        color: Colors.green,
+                        child: Text(
+                          "Add Price",
+                          style: CustomFontStyle.RegularTextStyle(Colors.white),
+                        ),
+                      ),
+                    ),
+
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
@@ -413,32 +477,33 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
                           ),
                         ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: _screenConfig.rH(2)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(price,
-                                style: CustomFontStyle.regularTextStyle(
-                                    blackColor)),
-                            SizedBox(
-                              width: _screenConfig.rW(1),
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: TextFormField(
-                                  validator: validateString,
-                                  controller: _priceController,
-                                  decoration: new InputDecoration.collapsed(),
-                                  style: CustomFontStyle.regularFormTextStyle(
-                                      greyColor),
-                                  keyboardType: TextInputType.number,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+
+                      // child: Padding(
+                      //   padding: EdgeInsets.only(top: _screenConfig.rH(2)),
+                      //   child: Row(
+                      //     crossAxisAlignment: CrossAxisAlignment.center,
+                      //     children: <Widget>[
+                      //       Text(price,
+                      //           style: CustomFontStyle.regularTextStyle(
+                      //               blackColor)),
+                      //       SizedBox(
+                      //         width: _screenConfig.rW(1),
+                      //       ),
+                      //       Expanded(
+                      //         child: Container(
+                      //           child: TextFormField(
+                      //             validator: validateString,
+                      //             controller: _priceController,
+                      //             decoration: new InputDecoration.collapsed(),
+                      //             style: CustomFontStyle.regularFormTextStyle(
+                      //                 greyColor),
+                      //             keyboardType: TextInputType.number,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ),
                   ],
                 ),
@@ -813,6 +878,7 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
           ),
           onTap: () {
             setState(() {
+              print("taped");
               selectedItem = itemsCount;
             });
           },
@@ -895,5 +961,64 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
     setState(() {
       _image = image;
     });
+  }
+
+  List<Widget> _buildPricingList(List<Pricing> pricing, BuildContext context) {
+    List<Widget> widget = new List();
+    pricing.forEach((price) {
+      widget.add(Column(children: <Widget>[
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                "${price.price}",
+                style: CustomFontStyle.regularBoldTextStyle(Colors.grey),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: Text(
+                "${price.size}",
+                style: CustomFontStyle.regularBoldTextStyle(Colors.grey),
+              ),
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            IconButton(
+              onPressed: () {
+                showDialog(
+                        context: context,
+                        child: PricingAddEditDialog(
+                            pricing: price,
+                            itemId: data.fooditems.list[selectedItem].id))
+                    .then((value) => getData());
+              },
+              icon: Icon(Icons.edit, color: Colors.grey),
+            ),
+            IconButton(
+                onPressed: () {
+                  _deletePricing(price.id);
+                },
+                icon: Icon(
+                  Icons.remove_circle,
+                  color: Colors.red,
+                )),
+          ],
+        )
+      ]));
+    });
+    widget.add(Container(
+      color: Colors.red,
+      width: 30.0,
+    ));
+    return widget;
   }
 }
