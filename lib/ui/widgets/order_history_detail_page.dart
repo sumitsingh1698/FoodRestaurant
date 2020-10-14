@@ -172,7 +172,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                                           greyColor),
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -189,8 +189,24 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Text(
+                        "Note : ",
+                        style: CustomFontStyle.mediumTextStyle(greyColor),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              widget._selectedOrder.restaurantNote.toString(),
+                              style: CustomFontStyle.mediumTextStyle(greyColor),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(left: 15.0, right: 15.0),
                         child: Row(

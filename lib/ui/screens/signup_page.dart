@@ -26,6 +26,7 @@ class _SignUpPage extends State<SignUpPage> {
   TextEditingController _lastNameController;
   TextEditingController _mobileController;
   TextEditingController _emailController;
+  TextEditingController _storeFssaiController;
   RestaurantLocation _resLocation;
 
   var universitySelectedItem = "Waseda University",
@@ -52,6 +53,7 @@ class _SignUpPage extends State<SignUpPage> {
     _mobileController = new TextEditingController();
     _passwordController = new TextEditingController();
     _emailController = new TextEditingController();
+    _storeFssaiController = new TextEditingController();
   }
 
   @override
@@ -76,6 +78,7 @@ class _SignUpPage extends State<SignUpPage> {
       'xxx',
       phone,
       'xxxx',
+      _storeFssaiController.text,
     );
     // hideLoading();
 
@@ -144,6 +147,14 @@ class _SignUpPage extends State<SignUpPage> {
                   hint: enterStoreName,
                   fieldValidator: validateName,
                   controller: _storeNameController,
+                  obscure: false,
+                ),
+                SizedBox(height: _screenConfig.rH(6)),
+                CustomFormField(
+                  title: storeFssai,
+                  hint: enterThestoreFassai,
+                  fieldValidator: validateName,
+                  controller: _storeFssaiController,
                   obscure: false,
                 ),
                 SizedBox(height: _screenConfig.rH(6)),

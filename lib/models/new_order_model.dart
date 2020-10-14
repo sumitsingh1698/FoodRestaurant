@@ -5,6 +5,7 @@ class NewOrderModel {
   String id;
   List<Orderitems> orderitems;
   double grandtotal;
+  String restaurantNote;
 
   NewOrderModel(
       {this.orderNo,
@@ -12,7 +13,8 @@ class NewOrderModel {
       this.user,
       this.id,
       this.orderitems,
-      this.grandtotal});
+      this.grandtotal,
+      this.restaurantNote});
 
   NewOrderModel.fromJson(Map<String, dynamic> json) {
     orderNo = json['order_no'];
@@ -26,6 +28,7 @@ class NewOrderModel {
       });
     }
     grandtotal = json['grandtotal'];
+    restaurantNote = json['restaurant_note'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +41,8 @@ class NewOrderModel {
       data['orderitems'] = this.orderitems.map((v) => v.toJson()).toList();
     }
     data['grandtotal'] = this.grandtotal;
+    data['restaurant_note'] = this.restaurantNote;
+
     return data;
   }
 }

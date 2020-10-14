@@ -243,6 +243,27 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     height: 1,
                     color: cloudsColor,
                   ),
+                  widget._selectedNewOrder.restaurantNote == ''
+                      ? Container()
+                      : SizedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Text(
+                                "Note : ",
+                                style: CustomFontStyle.regularBoldTextStyle(
+                                    blackColor),
+                              ),
+                              Text(
+                                widget._selectedNewOrder.restaurantNote,
+                                style:
+                                    CustomFontStyle.smallTextStyle(greyColor),
+                              ),
+                            ],
+                          ),
+                        ),
                   Padding(
                     padding: EdgeInsets.only(left: 15.0, right: 15.0),
                     child: Row(

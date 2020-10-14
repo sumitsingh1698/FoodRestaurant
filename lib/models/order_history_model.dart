@@ -8,17 +8,19 @@ class OrderHistoryModel {
   Driver driver;
   String paymentStatus;
   String paymentMethod;
+  String restaurantNote;
 
   OrderHistoryModel(
       {this.orderNo,
-        this.slottime,
-        this.user,
-        this.id,
-        this.orderitems,
-        this.grandtotal,
-        this.driver,
-        this.paymentStatus,
-        this.paymentMethod});
+      this.slottime,
+      this.user,
+      this.id,
+      this.orderitems,
+      this.grandtotal,
+      this.driver,
+      this.paymentStatus,
+      this.paymentMethod,
+      this.restaurantNote});
 
   OrderHistoryModel.fromJson(Map<String, dynamic> json) {
     orderNo = json['order_no'];
@@ -33,9 +35,10 @@ class OrderHistoryModel {
     }
     grandtotal = json['grandtotal'];
     driver =
-    json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
+        json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
     paymentStatus = json['payment_status'];
     paymentMethod = json['payment_method'];
+    restaurantNote = json['restaurant_note'];
   }
 
   Map<String, dynamic> toJson() {
@@ -55,6 +58,7 @@ class OrderHistoryModel {
     }
     data['payment_status'] = this.paymentStatus;
     data['payment_method'] = this.paymentMethod;
+    data['restaurant_note'] = this.restaurantNote;
     return data;
   }
 }

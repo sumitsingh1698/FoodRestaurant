@@ -6,15 +6,17 @@ class PickupOrdersResponseModel {
   List<Orderitems> orderitems;
   double grandtotal;
   Driver driver;
+  String restaurantNote;
 
   PickupOrdersResponseModel(
       {this.orderNo,
-        this.slottime,
-        this.user,
-        this.id,
-        this.orderitems,
-        this.grandtotal,
-        this.driver});
+      this.slottime,
+      this.user,
+      this.id,
+      this.orderitems,
+      this.grandtotal,
+      this.driver,
+      this.restaurantNote});
 
   PickupOrdersResponseModel.fromJson(Map<String, dynamic> json) {
     orderNo = json['order_no'];
@@ -28,8 +30,9 @@ class PickupOrdersResponseModel {
       });
     }
     grandtotal = json['grandtotal'];
+    restaurantNote = json['restaurant_note'];
     driver =
-    json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
+        json['driver'] != null ? new Driver.fromJson(json['driver']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +48,8 @@ class PickupOrdersResponseModel {
     if (this.driver != null) {
       data['driver'] = this.driver.toJson();
     }
+    data['restaurant_note'] = restaurantNote;
+
     return data;
   }
 }

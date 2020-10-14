@@ -12,22 +12,23 @@ class RestaurantSignupModel {
   String foodType;
   String mobile;
   String otp;
+  String fssai;
 
   RestaurantSignupModel(
-    this.emailAddress,
-    this.password,
-    this.firstName,
-    this.lastName,
-    this.countryPrefix,
-    this.phone,
-    this.name,
-    this.buildingAddress,
-    this.restaurantLocation,
-    this.storeNumber,
-    this.foodType,
-    this.mobile,
-    this.otp,
-  );
+      this.emailAddress,
+      this.password,
+      this.firstName,
+      this.lastName,
+      this.countryPrefix,
+      this.phone,
+      this.name,
+      this.buildingAddress,
+      this.restaurantLocation,
+      this.storeNumber,
+      this.foodType,
+      this.mobile,
+      this.otp,
+      this.fssai);
 
   RestaurantSignupModel.fromJson(Map<String, dynamic> json) {
     emailAddress = json['email_address'];
@@ -45,6 +46,7 @@ class RestaurantSignupModel {
     foodType = json['food_type'];
     mobile = json['mobile'];
     otp = json['otp'];
+    fssai = json['fssai'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,6 +66,7 @@ class RestaurantSignupModel {
     data['food_type'] = this.foodType;
     data['mobile'] = this.mobile;
     data['otp'] = this.otp;
+    data['fssai'] = this.fssai;
     return data;
   }
 }

@@ -170,6 +170,31 @@ class _PickUpOrderDetailPageState extends State<PickUpOrderDetailPage> {
                     ],
                   ),
                 ),
+                widget._selectedOrder.restaurantNote == ""
+                    ? Container()
+                    : Padding(
+                        padding: EdgeInsets.all(_screenConfig.rH(2)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Note : ",
+                                  style: CustomFontStyle.regularBoldTextStyle(
+                                      blackColor),
+                                ),
+                                Text(
+                                  widget._selectedOrder.restaurantNote,
+                                  style: CustomFontStyle.regularBoldTextStyle(
+                                      greyColor),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
               ]),
               Container(
                 height: 1,
