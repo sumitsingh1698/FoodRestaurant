@@ -41,8 +41,6 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   EditItemResponseModel data;
   int selectedItem = 0;
   TextEditingController _foodNameController;
-  TextEditingController _sizeNameController;
-  TextEditingController _priceController;
   TextEditingController _descriptionController;
   List<Pricing> pricingList;
 
@@ -87,7 +85,9 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
     print(types.toString());
     foodCatData = (types).map((i) => FoodItemCategory.fromJson(i)).toList();
     setState(() {
-      selectedFoodCat = foodCatData[0];
+      if (data != null)
+        selectedFoodCat = foodCatData.firstWhere((element) =>
+            element.id == data.fooditems.list[selectedItem].foodCategory);
     });
     setState(() {
       _loader = false;
@@ -95,17 +95,24 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
   }
 
   _handleSaveDetails(itemId) async {
+    print("add Item in EditProduc");
     showLoading();
+    var data = {
+      "name": _foodNameController.text,
+      "short_description": _descriptionController.text,
+      "food_category": selectedFoodCat.id,
+      "diet": diet,
+    };
+    print("data : $data");
+
     var res = await addNewItem(
         itemId,
         {
           "name": _foodNameController.text,
           "short_description": _descriptionController.text,
-          "size": _sizeNameController.text,
-          "price": _priceController.text,
-          "type": choice,
-          // "food_category": selectedFoodCat.id,
-          // "diet": "veg",
+          // "type": choice,
+          "food_category": selectedFoodCat.id,
+          "diet": diet,
         },
         _image);
     print('response of food edit is $res');
@@ -129,17 +136,16 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
     request.headers['Authorization'] = "Token " + token;
     request.fields['name'] = body['name'];
     request.fields['short_description'] = body['short_description'];
-    request.fields['size'] = body['size'];
-    request.fields['price'] = body['price'];
-    request.fields['type'] = body['type'];
-    // request.fields['food_category'] = body['food_category'].toString();
-    // request.fields['diet'] = body['diet'];
+    // request.fields['type'] = body['type'];
+    request.fields['food_category'] = body['food_category'].toString();
+    request.fields['diet'] = body['diet'];
     if (file != null) {
       request.files.add(mulipartFile);
     }
 
     http.StreamedResponse postresponse = await request.send();
     var rsp = postresponse;
+    print(postresponse.toString());
     if (postresponse.statusCode == 200) {
       var res = await http.Response.fromStream(postresponse);
       getData();
@@ -197,6 +203,9 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
       _radioValue = data.fooditems.list[selectedItem].type;
       choice = _radioValue;
       pricingList = data.fooditems.list[selectedItem].pricing;
+      diet = data.fooditems.list[selectedItem].diet;
+      selectedFoodCat = foodCatData.firstWhere((element) =>
+          element.id == data.fooditems.list[selectedItem].foodCategory);
     } else {
       _foodNameController = new TextEditingController();
       pricingList = [];
@@ -695,7 +704,8 @@ class _EditProductsPageState extends State<EditProductsNewPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.symmetric(vertical: _screenConfig.rH(10)),
+                padding: EdgeInsets.symmetric(
+                    vertical: _screenConfig.rH(10), horizontal: 10.0),
                 child: Text(
                   areYouSureToDelete,
                   style: CustomFontStyle.regularBoldTextStyle(blackColor),

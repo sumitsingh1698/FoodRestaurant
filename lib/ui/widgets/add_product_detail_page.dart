@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:BellyRestaurant/data/location_list_data.dart';
 import 'package:BellyRestaurant/models/food_type_model.dart';
+import 'package:BellyRestaurant/utils/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as Picker;
@@ -156,11 +157,17 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
   Widget _buildSaveButton(context) {
     return InkWell(
       onTap: () {
-        if (_formKey.currentState.validate() & (_image != null)) {
-          setState(() {
-            pressed = true;
-            _handleSaveDetails();
-          });
+        if (_formKey.currentState.validate()) {
+          if (_image == null) {
+            showToast("Select Image", grey1Color);
+          } else {
+            setState(() {
+              pressed = true;
+              _handleSaveDetails();
+            });
+          }
+        } else {
+          showToast("Fill all field", greyColor);
         }
       },
       child: Container(

@@ -59,6 +59,8 @@ class Item {
   int id;
   String shortDescription;
   String name;
+  String diet;
+  int foodCategory;
 
   Item(
       {this.type,
@@ -66,7 +68,9 @@ class Item {
       this.image,
       this.id,
       this.shortDescription,
-      this.name});
+      this.name,
+      this.foodCategory,
+      this.diet});
 
   Item.fromJson(Map<String, dynamic> json) {
     type = json['type'];
@@ -75,6 +79,8 @@ class Item {
     id = json['id'];
     shortDescription = json['short_description'];
     name = json['name'];
+    foodCategory = json['food_category'];
+    diet = json['diet'];
     // print("pricing ${json['pricing'].toString()}");
     if (json['pricing'] != null) {
       pricing = new List<Pricing>();
@@ -94,6 +100,8 @@ class Item {
     data['id'] = this.id;
     data['short_description'] = this.shortDescription;
     data['name'] = this.name;
+    data['food_category'] = this.foodCategory;
+    data['diet'] = this.diet;
     return data;
   }
 }

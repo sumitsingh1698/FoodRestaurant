@@ -27,6 +27,7 @@ class _PricingAddEditDialogState extends State<PricingAddEditDialog> {
   NewOrdersDataSource newOrdersDataSource;
   GlobalKey<FormState> _formKey = new GlobalKey();
   AppConfig _screenConfig;
+  bool isButtonDisable = false;
 
   String token;
 
@@ -64,6 +65,7 @@ class _PricingAddEditDialogState extends State<PricingAddEditDialog> {
   void _handleUpdatePricing() async {
     setState(() {
       isLoading = true;
+      isButtonDisable = true;
     });
     if (_formKey.currentState.validate()) {
       try {
@@ -238,7 +240,9 @@ class _PricingAddEditDialogState extends State<PricingAddEditDialog> {
                     child: Container(
                         child: RaisedButton(
                       color: Colors.green,
-                      onPressed: _handleUpdatePricing,
+                      onPressed: isButtonDisable == true
+                          ? () {}
+                          : _handleUpdatePricing,
                       child: Text("Save"),
                     )),
                   ),
