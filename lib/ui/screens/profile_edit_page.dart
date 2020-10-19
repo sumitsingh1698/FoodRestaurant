@@ -39,6 +39,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   TextEditingController _lastNameController;
   TextEditingController _mobileController;
   TextEditingController _emailController;
+  TextEditingController _discountController;
   bool isLoading = true;
   SharedPreferences prefs;
   AppConfig _screenConfig;
@@ -79,6 +80,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         new TextEditingController(text: _userResponse.lastName);
     _emailController =
         new TextEditingController(text: _userResponse.emailAddress);
+    _discountController = new TextEditingController(
+        text: _userResponse.discountedPercentage.toString());
     _passwordController = new TextEditingController();
     _newPasswordController = new TextEditingController();
     setState(() {
@@ -117,6 +120,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           "last_name": _lastNameController.text,
           "email_address": _emailController.text,
           "phone": _mobileController.text,
+          "discounted_percentage": _discountController.text,
           "restaurant_opening_time": oTime,
           "restaurant_closing_time": cTime
         }, _image);
@@ -132,6 +136,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         "last_name": _lastNameController.text,
         "email_address": _emailController.text,
         "phone": _mobileController.text,
+        "discounted_percentage": _discountController.text,
         "restaurant_opening_time": oTime,
         "restaurant_closing_time": cTime
       }, _image);
@@ -165,6 +170,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     request.fields['id'] = body['store_id'];
     request.fields['email_address'] = body['email_address'];
     request.fields['phone'] = body['phone'];
+    request.fields['discounted_percentage'] = body['discounted_percentage'];
     if (oTime != null)
       request.fields['restaurant_opening_time'] =
           body['restaurant_opening_time'];
@@ -418,6 +424,17 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     fieldValidator: validateName,
                     controller: _lastNameController,
                     obscure: false,
+                  ),
+                  SizedBox(
+                    width: _screenConfig.rW(2),
+                  ),
+                  CustomFormField(
+                    title: discount,
+                    hint: enterDiscount,
+                    fieldValidator: validateName,
+                    controller: _discountController,
+                    obscure: false,
+                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(
                     width: _screenConfig.rW(2),

@@ -207,23 +207,23 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              subTotal,
-                              style: CustomFontStyle.mediumTextStyle(greyColor),
-                            ),
-                            Text(
-                              "  ₹ " +
-                                  widget._selectedOrder.grandtotal.toString(),
-                              style: CustomFontStyle.mediumTextStyle(greyColor),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     children: <Widget>[
+                      //       Text(
+                      //         subTotal,
+                      //         style: CustomFontStyle.mediumTextStyle(greyColor),
+                      //       ),
+                      //       Text(
+                      //         "  ₹ " +
+                      //             widget._selectedOrder.grandtotal.toString(),
+                      //         style: CustomFontStyle.mediumTextStyle(greyColor),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Row(

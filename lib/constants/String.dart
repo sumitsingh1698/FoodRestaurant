@@ -40,6 +40,8 @@ const String phoneShouldbe10Digits = "Please enter your 10-digit phone number.";
 const String deliveryUniversity = "Delivery university";
 const String storeFssai = "Store FSSAI";
 const String enterThestoreFassai = "Enter the store FSSAI";
+const String discount = "Discount";
+const String enterDiscount = "Enter Discount";
 
 // otpPage
 const String oneTimePassword = "One-Time Password";

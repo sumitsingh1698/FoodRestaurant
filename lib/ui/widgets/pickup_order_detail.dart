@@ -292,19 +292,19 @@ class _PickUpOrderDetailPageState extends State<PickUpOrderDetailPage> {
                     ),
                     Column(
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              subTotal + "  ",
-                              style: CustomFontStyle.mediumTextStyle(greyColor),
-                            ),
-                            Text(
-                              widget._selectedOrder.grandtotal.toString(),
-                              style: CustomFontStyle.mediumTextStyle(greyColor),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: <Widget>[
+                        //     Text(
+                        //       subTotal + "  ",
+                        //       style: CustomFontStyle.mediumTextStyle(greyColor),
+                        //     ),
+                        //     Text(
+                        //       widget._selectedOrder.grandtotal.toString(),
+                        //       style: CustomFontStyle.mediumTextStyle(greyColor),
+                        //     ),
+                        //   ],
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[

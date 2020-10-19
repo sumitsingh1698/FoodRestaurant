@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:BellyRestaurant/models/user_model.dart';
 import 'package:BellyRestaurant/utils/base_url.dart';
 import 'package:BellyRestaurant/utils/network_utils.dart';
@@ -14,6 +16,7 @@ class ProfileDataSource {
         .then((dynamic res) async {
       UserModel response;
       if (res['results'].isNotEmpty) {
+        log(res.toString());
         response = UserModel.fromJson(res['results'][0]);
       }
 

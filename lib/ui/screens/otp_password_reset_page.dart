@@ -105,10 +105,11 @@ class _OtpState extends State<OtpVerificationPage>
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
-            left: _screenConfig.rW(20), right: _screenConfig.rW(20)),
+            left: _screenConfig.rW(10), right: _screenConfig.rW(10)),
         child: Column(
           //mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: _screenConfig.rH(8)),
             _getVerificationCodeLabel,
@@ -130,31 +131,34 @@ class _OtpState extends State<OtpVerificationPage>
 
   get _getInputField {
     return Padding(
-      padding: EdgeInsets.only(left: _screenConfig.rW(10)),
-      child: PinCodeTextField(
-        pinBoxOuterPadding:
-            EdgeInsets.symmetric(horizontal: _screenConfig.rW(2)),
-        autofocus: false,
-        controller: controller,
-        hideCharacter: false,
-        defaultBorderColor: disabledGrey,
-        hasTextBorderColor: blackColor,
-        maxLength: pinLength,
-        hasError: hasError,
-        onTextChanged: (text) {
-          setState(() {
-            hasError = false;
-          });
-        },
-        onDone: (_otp) {
-          _handleOTPVerification(_otp);
-        },
-        wrapAlignment: WrapAlignment.start,
-        pinBoxDecoration: ProvidedPinBoxDecoration.underlinedPinBoxDecoration,
-        pinTextStyle: TextStyle(fontSize: 30.0),
-        pinTextAnimatedSwitcherTransition:
-            ProvidedPinBoxTextAnimation.scalingTransition,
-        pinTextAnimatedSwitcherDuration: Duration(milliseconds: 300),
+      padding: const EdgeInsets.only(left: 10.0),
+      child: Center(
+        child: PinCodeTextField(
+          pinBoxWidth: 50.0,
+          pinBoxOuterPadding:
+              EdgeInsets.symmetric(horizontal: _screenConfig.rW(2)),
+          autofocus: false,
+          controller: controller,
+          hideCharacter: false,
+          defaultBorderColor: disabledGrey,
+          hasTextBorderColor: blackColor,
+          maxLength: pinLength,
+          hasError: hasError,
+          onTextChanged: (text) {
+            setState(() {
+              hasError = false;
+            });
+          },
+          onDone: (_otp) {
+            _handleOTPVerification(_otp);
+          },
+          wrapAlignment: WrapAlignment.start,
+          pinBoxDecoration: ProvidedPinBoxDecoration.underlinedPinBoxDecoration,
+          pinTextStyle: TextStyle(fontSize: 15.0),
+          pinTextAnimatedSwitcherTransition:
+              ProvidedPinBoxTextAnimation.scalingTransition,
+          pinTextAnimatedSwitcherDuration: Duration(milliseconds: 300),
+        ),
       ),
     );
   }

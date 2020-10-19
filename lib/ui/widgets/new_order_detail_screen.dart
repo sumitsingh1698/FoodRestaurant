@@ -264,22 +264,22 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                             ],
                           ),
                         ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Text(
-                          subTotal + "  ",
-                          style: CustomFontStyle.mediumTextStyle(greyColor),
-                        ),
-                        Text(
-                          widget._selectedNewOrder.grandtotal.toString(),
-                          style: CustomFontStyle.mediumTextStyle(greyColor),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: <Widget>[
+                  //       Text(
+                  //         subTotal + "  ",
+                  //         style: CustomFontStyle.mediumTextStyle(greyColor),
+                  //       ),
+                  //       Text(
+                  //         widget._selectedNewOrder.grandtotal.toString(),
+                  //         style: CustomFontStyle.mediumTextStyle(greyColor),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.all(15.0),
                     child: Row(

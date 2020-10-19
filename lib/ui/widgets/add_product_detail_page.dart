@@ -85,9 +85,11 @@ class _AddProductDetailPage extends State<AddProductDetailPage> {
       print('sucessssssssssssssssssssssssssssssssssss');
       widget._controller.add(true);
       hideLoading();
+      showToast("Successfully Added", greenColor);
     } else {
       print('fffffffffffffffffffffffffffffffffffffffffffffffffff');
       hideLoading();
+      showToast("Failed To Add", greyColor);
     }
   }
 

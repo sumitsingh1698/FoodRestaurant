@@ -65,11 +65,11 @@ class _PricingAddEditDialogState extends State<PricingAddEditDialog> {
   void _handleUpdatePricing() async {
     setState(() {
       isLoading = true;
-      isButtonDisable = true;
     });
     if (_formKey.currentState.validate()) {
       try {
-        if (widget.pricing != null)
+        if (widget.pricing != null) {
+          isButtonDisable = true;
           await newOrdersDataSource
               .putPricing(
                   token,
@@ -91,7 +91,7 @@ class _PricingAddEditDialogState extends State<PricingAddEditDialog> {
               Navigator.pop(context, true);
             }
           });
-        else {
+        } else {
           await newOrdersDataSource
               .addPricing(token, widget.itemId, _sizeTextController.text,
                   _totalQuantityTextController.text, _priceTextController.text)

@@ -9,18 +9,20 @@ class UserModel {
   String name;
   String countryPrefix;
   String storeNumber;
+  double discountedPercentage;
 
   UserModel(
       {this.id,
-        this.firstName,
-        this.lastName,
-        this.emailAddress,
-        this.campus,
-        this.phone,
-        this.logo,
-        this.name,
-        this.countryPrefix,
-        this.storeNumber});
+      this.firstName,
+      this.lastName,
+      this.emailAddress,
+      this.campus,
+      this.phone,
+      this.logo,
+      this.name,
+      this.countryPrefix,
+      this.storeNumber,
+      this.discountedPercentage});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -28,12 +30,13 @@ class UserModel {
     lastName = json['last_name'];
     emailAddress = json['email_address'];
     campus =
-    json['campus'] != null ? new Campus.fromJson(json['campus']) : null;
+        json['campus'] != null ? new Campus.fromJson(json['campus']) : null;
     phone = json['phone'];
     logo = json['logo'];
     name = json['name'];
     countryPrefix = json['country_prefix'];
     storeNumber = json['store_number'];
+    discountedPercentage = json['discounted_percentage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +53,7 @@ class UserModel {
     data['name'] = this.name;
     data['country_prefix'] = this.countryPrefix;
     data['store_number'] = this.storeNumber;
+    data['discounted_percentage'] = this.discountedPercentage;
     return data;
   }
 }
